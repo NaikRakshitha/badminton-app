@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import AuthStatus from './components/AuthStatus';
+import VenueCheckIn from './components/VenueCheckIn';
 
 export default async function Home() {
   const { data: venues, error } = await supabase
@@ -21,6 +22,7 @@ export default async function Home() {
             <h2 className="text-xl font-semibold">{venue.name}</h2>
             <p className="text-gray-500">{venue.address}</p>
             <p className="text-sm text-gray-400">{venue.total_courts} courts</p>
+            <VenueCheckIn venueId={venue.id} />
           </div>
         ))}
       </div>

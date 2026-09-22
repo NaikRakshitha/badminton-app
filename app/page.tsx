@@ -1,4 +1,5 @@
 import { supabase } from '@/lib/supabase';
+import AuthStatus from './components/AuthStatus';
 
 export default async function Home() {
   const { data: venues, error } = await supabase
@@ -13,6 +14,7 @@ export default async function Home() {
   return (
     <main className="p-8">
       <h1 className="text-3xl font-bold mb-6">Badminton Venues</h1>
+      <AuthStatus />
       <div className="space-y-4">
         {venues?.map((venue) => (
           <div key={venue.id} className="border rounded-lg p-4">

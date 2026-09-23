@@ -31,7 +31,8 @@ export default function VenueCheckIn({ venueId }: { venueId: number }) {
   async function handleCheckIn() {
     if (!user) return
     setLoading(true)
-    await supabase.from('check_ins').insert({ user_id: user.id, venue_id: venueId })
+    const { error } = await supabase.from('check_ins').insert({ user_id: user.id, venue_id: venueId })
+    if (error) console.error('Check-in error:', error)
     await fetchCheckIns()
     setLoading(false)
   }
@@ -39,24 +40,31 @@ export default function VenueCheckIn({ venueId }: { venueId: number }) {
   const alreadyCheckedIn = checkIns.some((c) => c.user_id === user?.id)
 
   return (
-    <div className="mt-2">
-      <p className="text-sm text-gray-500 mb-2">
-        {checkIns.length} checked in
-      </p>
+    <div className="flex flex-col items-end gap-1.5 shrink-0">
+      <span className="text-xs text-[#6B7A6F]">
+        {checkIns.length} {checkIns.length === 1 ? 'player' : 'players'} here
+      </span>
+
       {user && !alreadyCheckedIn && (
         <button
           onClick={handleCheckIn}
           disabled={loading}
-          className="bg-green-600 text-white text-sm rounded px-3 py-1"
+          className="bg-[#1A3A2E] text-white text-sm font-medium rounded-full px-4 py-1.5 hover:bg-[#24503F] transition-colors disabled:opacity-50"
         >
-          {loading ? 'Checking in...' : 'Check In'}
+          {loading ? 'Checking in…' : 'Check in'}
         </button>
       )}
+
       {alreadyCheckedIn && (
-        <p className="text-sm text-green-600">You're checked in ✓</p>
+        <span className="bg-[#E8C547] text-[#1A3A2E] text-sm font-semibold rounded-full px-4 py-1.5">
+          You're in ✓
+        </span>
       )}
+
       {!user && (
-        <p className="text-sm text-gray-400">Log in to check in</p>
+        <a href="/login" className="text-sm text-[#1A3A2E] underline">
+          Log in to check in
+        </a>
       )}
     </div>
   )

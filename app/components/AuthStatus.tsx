@@ -23,17 +23,19 @@ export default function AuthStatus() {
 
   if (!user) {
     return (
-      <div className="text-sm">
-        <a href="/login" className="underline mr-4">Log In</a>
-        <a href="/signup" className="underline">Sign Up</a>
+      <div className="text-sm flex gap-4">
+        <a href="/login" className="text-[#1A3A2E] font-medium">Log in</a>
+        <a href="/signup" className="text-[#6B7A6F]">Sign up</a>
       </div>
     )
   }
 
   return (
-    <div className="text-sm flex items-center gap-4">
-      <span>Logged in as {user.email}</span>
-      <button onClick={handleLogout} className="underline">Log Out</button>
+    <div className="text-sm flex items-center gap-3">
+      <span className="text-[#6B7A6F]">{user.email}</span>
+      <button onClick={handleLogout} className="text-[#1A3A2E] font-medium">
+        Log out
+      </button>
     </div>
   )
 }

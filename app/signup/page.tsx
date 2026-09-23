@@ -2,11 +2,13 @@
 
 import { useState } from 'react'
 import { supabase } from '@/lib/supabase'
+import { useRouter } from 'next/navigation'
 
 export default function SignUp() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState('')
+  const router = useRouter()
 
   async function handleSignUp(e: React.FormEvent) {
     e.preventDefault()
@@ -15,7 +17,7 @@ export default function SignUp() {
     if (error) {
       setMessage(`Error: ${error.message}`)
     } else {
-      setMessage('Success! Check your email or try logging in.')
+      router.push('/profile-setup')
     }
   }
 
